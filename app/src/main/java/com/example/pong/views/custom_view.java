@@ -15,6 +15,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.example.pong.MainActivity;
 import com.example.pong.R;
 import com.example.pong.SoundPlayer;
 
@@ -81,7 +83,9 @@ public class custom_view extends View {
         init (attrs);
     }
     private void init (@Nullable AttributeSet set){
-
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((MainActivity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
         rect=new Rect();
         rect1=new Rect();
         paint =new Paint();
@@ -92,10 +96,10 @@ public class custom_view extends View {
         paint3=new Paint();
 
         paint3.setColor(Color.WHITE);
-        paint3.setTextSize(80);
+        paint3.setTextSize((int)(height*0.05));
         paint3.setStyle(Paint.Style.FILL);
         paint2.setColor(Color.YELLOW);
-        paint2.setTextSize(120);
+        paint2.setTextSize((int)(height*0.07));
         paint2.setStyle(Paint.Style.FILL);
     }
 
@@ -117,7 +121,7 @@ public class custom_view extends View {
         canvas.drawColor(Color.BLACK);
         canvas.drawRect(rect, paint);
         canvas.drawRect(rect1, paint1);
-        canvas.drawText("Score:" + score, canvas.getWidth()/3+60, canvas.getHeight()/14, paint3);
+        canvas.drawText("Score:" + score, canvas.getWidth()/3, canvas.getHeight()/14, paint3);
         if (rect1.left < 0 || rect1.right >= canvas.getWidth())
         {
             x1 *= -1;
@@ -164,14 +168,14 @@ public class custom_view extends View {
             if(a<score) {
                 SharedPreferences.Editor myEdit = sh.edit();
                 myEdit.putInt("highscore", score);
-                canvas.drawText("High Score:" +score, canvas.getWidth()/4+40, canvas.getHeight()/6, paint3);
+                canvas.drawText("High Score:" +score, canvas.getWidth()/4-10, canvas.getHeight()/6, paint3);
                 myEdit.apply();
             }
             else
             {
-                canvas.drawText("High Score:" + a, canvas.getWidth()/4+40, canvas.getHeight()/6, paint3);
+                canvas.drawText("High Score:" + a, canvas.getWidth()/4-10, canvas.getHeight()/6, paint3);
             }
-            canvas.drawText("Game Over!", canvas.getWidth()/4-20, canvas.getHeight()/2, paint2);
+            canvas.drawText("Game Over !", canvas.getWidth()/4-70, canvas.getHeight()/2, paint2);
         }
 
         rect1.left += x1;
