@@ -6,8 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+   <Button
+       android:id="@+id/button1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Advanced"
+       app:layout_constraintBottom_toTopOf="@+id/button"
+       app:layout_constraintEnd_toStartOf="@+id/custom_view"
+       app:layout_constraintHorizontal_bias="0.499"
+       app:layout_constraintStart_toEndOf="@+id/custom_view"
+       app:layout_constraintTop_toBottomOf="@+id/custom_view"
+       app:layout_constraintVertical_bias="0.614" />
+
+   <Button
+       android:id="@+id/button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Beginner"
+       app:layout_constraintBottom_toTopOf="@+id/custom_view"
+       app:layout_constraintEnd_toStartOf="@+id/custom_view"
+       app:layout_constraintHorizontal_bias="0.499"
+       app:layout_constraintStart_toEndOf="@+id/custom_view"
+       app:layout_constraintTop_toBottomOf="@+id/custom_view"
+       app:layout_constraintVertical_bias="0.63" />
+
    <com.example.pong.views.custom_view
+       android:id="@+id/custom_view"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+       android:layout_height="match_parent"
+       tools:layout_editor_absoluteX="0dp"
+       tools:layout_editor_absoluteY="-34dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
