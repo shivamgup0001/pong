@@ -55,7 +55,7 @@ public class custom1 extends View {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public custom1(Context context) {
-        super( context);
+        super(context);
         hitsound=new MediaPlayer();
         wallsound=new MediaPlayer();
         oversound=new MediaPlayer();
@@ -258,3 +258,4 @@ public class custom1 extends View {
         return value;
     }
 }
+
