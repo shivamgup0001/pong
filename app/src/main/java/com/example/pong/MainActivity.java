@@ -16,6 +16,7 @@ import com.example.pong.views.custom_view;
 public class MainActivity extends AppCompatActivity {
     private Button button;
     private Button button1;
+    private Button button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +25,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         button=findViewById(R.id.button);
         button1=findViewById(R.id.button1);
+        button2=findViewById(R.id.button2);
 button.setOnClickListener(new View.OnClickListener() {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View v) {
-        Intent i =new Intent(MainActivity.this,MainActivity2.class);
+       Intent i =new Intent(MainActivity.this,MainActivity2.class);
         startActivity(i);
     }
 });
-        button1.setOnClickListener(new View.OnClickListener() {
+       button1.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 Intent i =new Intent(MainActivity.this,MainActivity3.class);
+                startActivity(i);
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(MainActivity.this,MainActivity4.class);
                 startActivity(i);
             }
         });

@@ -5,15 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.pong.views.custom1;
-import com.example.pong.views.custom_view;
+import com.example.pong.views.custom2;
 
-public class MainActivity3 extends AppCompatActivity {
+public class MainActivity4 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getSupportActionBar().hide();
-        setContentView(new custom1(this));
+        setContentView(new custom2(this));
     }
 }

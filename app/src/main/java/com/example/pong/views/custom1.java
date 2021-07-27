@@ -26,13 +26,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.pong.MainActivity;
-import com.example.pong.MainActivity2;
+import com.example.pong.MainActivity3;
 import com.example.pong.R;
 import com.example.pong.SoundPlayer;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class custom_view extends View {
+public class custom1 extends View {
 
     private Rect rect;
     private Rect rect1;
@@ -51,13 +51,15 @@ public class custom_view extends View {
     private int y1=8;
     private int check=0;
     private int score=0;
+    private int score1=0;
+    private int power=0;
     private int start=0;
     //private SoundPlayer sound;
     static MediaPlayer hitsound,wallsound,oversound;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public custom_view(Context context) {
+    public custom1(Context context) {
         super(context);
         hitsound=new MediaPlayer();
         wallsound=new MediaPlayer();
@@ -69,37 +71,38 @@ public class custom_view extends View {
         wallsound=MediaPlayer.create(context,R.raw.beep);
         oversound=MediaPlayer.create(context,R.raw.gameover);
         //sound=new SoundPlayer(context);
-                init(null);
+        init(null);
     }
 
-    public custom_view(Context context, @Nullable AttributeSet attrs) {
+    public custom1(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         init (attrs);
     }
 
-    public custom_view(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public custom1(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         init (attrs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public custom_view(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public custom1(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         init (attrs);
     }
     private void init (@Nullable AttributeSet set){
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((MainActivity2) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ((MainActivity3) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
+
         rect=new Rect();
         rect1=new Rect();
         rect2=new Rect();
+        rect3=new Rect();
         rect4=new Rect();
         rect5=new Rect();
-
         paint =new Paint();
         paint1=new Paint();
         paint2=new Paint();
@@ -113,13 +116,10 @@ public class custom_view extends View {
         paint3.setColor(Color.WHITE);
         paint5.setColor(Color.WHITE);
         paint3.setTextSize((int)(height*0.025));
-       // paint3.setTextSize(50);
         paint5.setTextSize((int)(height*0.045));
-       // paint5.setTextSize(50);
         paint3.setStyle(Paint.Style.FILL);
         paint2.setColor(Color.YELLOW);
         paint2.setTextSize((int)(height*0.06));
-       // paint2.setTextSize(50);
         paint2.setStyle(Paint.Style.FILL);
     }
 
@@ -131,6 +131,10 @@ public class custom_view extends View {
             rect.top = getHeight() - 30;
             rect.right = rect.left + 300;
             rect.bottom = getHeight();
+            rect3.left = getWidth() / 2 - 150;
+            rect3.top = getHeight()/11+40;
+            rect3.right = rect3.left + 300;
+            rect3.bottom = rect3.top+30;
             rect1.left = getWidth() / 2 - 20;
             rect1.right = rect1.left + 50;
             rect1.top = getHeight() / 2 - 20;
@@ -149,59 +153,66 @@ public class custom_view extends View {
         rect5.top=getHeight()/2-50;
         rect5.bottom=rect4.top+100;
 
-       // ball(canvas);
+        // ball(canvas);
         canvas.drawColor(Color.BLACK);
         canvas.drawRect(rect, paint);
+        canvas.drawRect(rect3, paint4);
         canvas.drawRect(rect1, paint1);
         canvas.drawRect(rect2, paint);
+
         if(start==0){
             canvas.drawRect(rect4, paint4);
             canvas.drawText("START",rect4.left+30,rect4.bottom-20,paint2);
         }
-        canvas.drawText("Player Score:" + score, canvas.getWidth()/3, canvas.getHeight()/14, paint3);
+        canvas.drawText("Player Score:" + score, 30, canvas.getHeight()/14, paint3);
+        canvas.drawText("Computer Score:" + score1, canvas.getWidth()/2+30, canvas.getHeight()/14, paint3);
         if (rect1.left < 0 || rect1.right >= canvas.getWidth())
         {
             x1 *= -1;
             //sound.playWallSound();
             if(wallsound!=null)
-            wallsound.start();
+                wallsound.start();
         }
 
-            if (rect1.top < rect2.bottom)  {
-                y1 *= -1;
-                if (wallsound != null)
-                    wallsound.start();
-                //sound.playWallSound();
-            }
+        if ((rect1.top < rect3.bottom) && (rect1.left > rect3.left) && (rect1.right < rect3.right)) {
+            y1 *= -1;
+            score1++;
+            if (hitsound != null)
+                hitsound.start();
+            //sound.playWallSound();
+        }
 
-       // else
-         //   check=1;
+        // else
+        //   check=1;
         if((rect1.top>=(canvas.getHeight()-80))&&(rect1.left>=rect.left&&rect1.right<=rect.right))
         {
             y1*=-1;
             if(hitsound!=null)
-            hitsound.start();
+                hitsound.start();
             //sound.playHitSound();
             score++;
             if(score%3==0)
-           {
-               if(x1<=0)
-                   x1-=2;
-               if(x1>0)
-                   x1+=2;
-               if(y1<=0)
-                   y1-=2;
-               if(y1>0)
-                   y1+=2;
-           }
-
+            {
+                if(x1<=0)
+                    x1-=2;
+                if(x1>0)
+                    x1+=2;
+                if(y1<=0)
+                    y1-=2;
+                if(y1>0)
+                    y1+=2;
+            }
+            if((score>=10&&score<=15)||(score>=25&&score<=30))
+               power=1;
+            else
+                power=0;
         }
         if(rect1.top>=canvas.getHeight()-60)
         {
             check=1;
             //sound.playOverSound();
             if(oversound!=null)
-            oversound.start();
+                oversound.start();
 
             SharedPreferences sh = getContext().getSharedPreferences("pong", Context.MODE_PRIVATE);
             int a = sh.getInt("highscore", 0);
@@ -219,6 +230,12 @@ public class custom_view extends View {
             canvas.drawRect(rect5, paint4);
             canvas.drawText("RESTART",rect5.left+35,rect5.bottom-20,paint2);
         }
+
+        if (rect1.left>130&&rect1.left<getWidth()-130)
+            rect3.left=rect1.left-150;
+        rect3.top = getHeight()/11+40;
+        rect3.right = rect3.left + 300;
+        rect3.bottom = rect3.top+30;
         rect1.left += x1;
         rect1.right = rect1.left + 50;
         rect1.top += y1;
@@ -247,16 +264,32 @@ public class custom_view extends View {
                 if((x>=rect4.left&&x<=rect4.right)&&(y>=rect4.top&&y<=rect4.bottom))
                     start=1;
                 if(start==1) {
-                    if (x > 130 && x < (getWidth() - 130)) {
-                        if (x > rect.left && x < rect.right) {//touched
-                            rect.left = (int) x - 150;
-                            rect.top = getHeight() - 30;
-                            rect.right = rect.left + 300;
-                            rect.bottom = getHeight();
-                            counter++;
-                            if (check == 0)
-                                postInvalidate();
-                            return true;
+                    if (power == 0) {
+                        if (x > 130 && x < (getWidth() - 130)) {
+                            if (x > rect.left && x < rect.right) {//touched
+                                rect.left = (int) x - 150;
+                                rect.top = getHeight() - 30;
+                                rect.right = rect.left + 300;
+                                rect.bottom = getHeight();
+                                counter++;
+                                if (check == 0)
+                                    postInvalidate();
+                                return true;
+                            }
+                        }
+                    }
+                    if (power == 1) {
+                        if (x > 180 && x < (getWidth() - 180)) {
+                            if (x > rect.left && x < rect.right) {//touched
+                                rect.left = (int) x - 200;
+                                rect.top = getHeight() - 30;
+                                rect.right = rect.left + 400;
+                                rect.bottom = getHeight();
+                                counter++;
+                                if (check == 0)
+                                    postInvalidate();
+                                return true;
+                            }
                         }
                     }
                 }
@@ -265,7 +298,9 @@ public class custom_view extends View {
                     oversound.seekTo(0);
                     check=0;
                     counter=0;
+                    power=0;
                     score=0;
+                    score1=0;
                     start=0;
                     x1=8;
                     y1=8;
